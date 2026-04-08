@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = ["crates/provenir-core"]
+
+[profile.release]
+opt-level = "z"   # Minimise WASM binary size
+lto = true
+codegen-units = 1
+panic = "abort"

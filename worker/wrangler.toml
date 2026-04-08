@@ -1,0 +1,47 @@
+name = "provenir-worker"
+main = "src/index.ts"
+compatibility_date = "2024-07-25"
+compatibility_flags = ["nodejs_compat"]
+
+# ---------------------------------------------------------------------------
+# D1 — persistent SQLite database for provenance records and score audits
+# ---------------------------------------------------------------------------
+[[d1_databases]]
+binding = "DB"
+database_name = "provenir-db"
+# Replace with the ID returned by `wrangler d1 create provenir-db`
+database_id = "83be5839-d4a7-4a2b-8f6c-bb6136e4d31c"
+
+# ---------------------------------------------------------------------------
+# KV — short-lived score cache to avoid redundant external API calls
+# ---------------------------------------------------------------------------
+[[kv_namespaces]]
+binding = "SCORE_CACHE"
+# Replace with the ID returned by `wrangler kv namespace create SCORE_CACHE`
+id = "2c36371b95404887b7116c084a4e0eda"
+
+# ---------------------------------------------------------------------------
+# Secrets — set via `wrangler secret put <NAME>`, never stored here
+# ---------------------------------------------------------------------------
+# HF_TOKEN         — Hugging Face Inference API token (huggingface.co/settings/tokens)
+# BRAVE_SEARCH_KEY  — Brave Search API key (api.search.brave.com)
+# COPYSCAPE_KEY     — Copyscape credentials "username:apikey" (reserved, not active)
+
+[vars]
+# Non-sensitive tunables
+SCORE_CACHE_TTL_SECONDS = "60"
+
+[observability]
+enabled = false
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+persist = true
+invocation_logs = true
+
+[observability.traces]
+enabled = false
+persist = true
+head_sampling_rate = 1

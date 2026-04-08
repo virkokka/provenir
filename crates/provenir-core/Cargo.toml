@@ -1,0 +1,29 @@
+[package]
+name = "provenir-core"
+version = "0.1.0"
+edition = "2021"
+description = "WASM library for content fingerprinting and local pre-scoring signals"
+license = "MIT OR Apache-2.0"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+serde-wasm-bindgen = "0.6"
+# rayon is excluded: it requires threads, which WASM does not support by default
+blake3 = "1"
+# c2pa crate is large; we parse the subset of the spec we need ourselves
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# getrandom with js feature is required by several crypto deps in WASM contexts
+getrandom = { version = "0.2", features = ["js"] }
+js-sys = "0.3"
+wasm-bindgen-futures = "0.4"
+console_error_panic_hook = { version = "0.1", optional = true }
+
+[features]
+default = ["console_error_panic_hook"]
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3"

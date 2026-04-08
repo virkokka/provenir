@@ -1,0 +1,23 @@
+{
+  "name": "provenir-extension",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "copy-wasm": "cp src/wasm/provenir_core_bg.wasm public/provenir_core_bg.wasm",
+    "predev": "npm run copy-wasm",
+    "prebuild": "npm run copy-wasm",
+    "dev": "wxt dev",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "typecheck": "tsc --noEmit",
+    "zip": "wxt zip"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "wxt": "^0.20.20"
+  }
+}
